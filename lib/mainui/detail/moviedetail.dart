@@ -126,9 +126,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
               color: Colors.black87, fontSize: 16, fontWeight: FontWeight.w600),
         ),
         //
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
         //
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -141,9 +139,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
               ),
               radius: 18.0, //控制大小的
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
               _commentData.plus[0].nickname,
               style: TextStyle(
@@ -311,9 +307,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
               color: Colors.black87, fontSize: 16, fontWeight: FontWeight.w600),
         ),
         //
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
         Container(
           height: 150,
           child: Row(
@@ -326,9 +320,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
                   height: 150,
                 ),
               ),
-              SizedBox(
-                width: 3,
-              ),
+              SizedBox(width: 3),
               Expanded(
                 child: Image.network(
                   _allInfo.stageImg[1].imgUrl,
@@ -340,9 +332,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
           ),
         ),
         //
-        SizedBox(
-          height: 3,
-        ),
+        SizedBox(height: 3),
         //
         Container(
           height: 150,
@@ -356,9 +346,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
                   height: 150,
                 ),
               ),
-              SizedBox(
-                width: 3,
-              ),
+              SizedBox(width: 3),
               Expanded(
                 child: Image.network(
                   _allInfo.stageImg[3].imgUrl,
@@ -381,10 +369,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
           //如果是nonposition，则下面属性生效
           fit: StackFit.expand,
           children: <Widget>[
-            Image.network(
-              _allInfo.stageImg[0].imgUrl,
-              fit: BoxFit.cover,
-            ),
+            Image.network(_allInfo.stageImg[0].imgUrl, fit: BoxFit.cover),
             Container(
                 width: double.infinity, height: 240, color: Colors.black45),
             Positioned(
@@ -399,7 +384,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
                       fontWeight: FontWeight.w400),
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -513,9 +498,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
           style: TextStyle(
               color: Colors.black87, fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        SizedBox(
-          height: 5,
-        ),
+        SizedBox(height: 5),
         Text(_allInfo.story,
             style: TextStyle(
                 color: Colors.black54,
@@ -536,9 +519,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
           style: TextStyle(
               color: Colors.black87, fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        SizedBox(
-          height: 5,
-        ),
+        SizedBox(height: 5),
         //
         Container(
           height: 200,
@@ -555,9 +536,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
                     Image.network(_allInfo.actors[index].img,
                         height: 160, width: 120, fit: BoxFit.cover),
                     //
-                    SizedBox(
-                      height: 5,
-                    ),
+                    SizedBox(height: 5),
                     //
                     Container(
                         width: 120,

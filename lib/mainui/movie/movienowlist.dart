@@ -13,8 +13,7 @@ class MovieNowListWidget extends StatefulWidget {
 }
 
 //
-class MovieListState extends State<MovieNowListWidget>
-    with AutomaticKeepAliveClientMixin {
+class MovieListState extends State<MovieNowListWidget> {
   //
   List<MovieNowItem> _listData;
   int _nCount = 0;
@@ -27,16 +26,18 @@ class MovieListState extends State<MovieNowListWidget>
 
   //net request data
   void _requestNet() async {
-    if (!mounted) return;
     Response response = await new Dio().get(
         "https://ticket-api-m.mtime.cn/showing/movies.api",
         queryParameters: {"locationId": "290"});
     final jsonResponse = json.decode(response.toString());
     MovieNow nowAll = MovieNow.fromJson(jsonResponse);
-    setState(() {
-      _nCount = nowAll.data.ms.length;
-      _listData = nowAll.data.ms;
-    });
+    //
+    if (mounted) {
+      setState(() {
+        _nCount = nowAll.data.ms.length;
+        _listData = nowAll.data.ms;
+      });
+    }
   }
 
   @override
@@ -135,5 +136,7 @@ class MovieListState extends State<MovieNowListWidget>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  void dispose() {
+    super.dispose();
+  }
 }

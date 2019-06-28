@@ -11,8 +11,7 @@ class MovieComingListWidget extends StatefulWidget {
   }
 }
 
-class MovieComingListState extends State<MovieComingListWidget>
-    with AutomaticKeepAliveClientMixin {
+class MovieComingListState extends State<MovieComingListWidget>{
   //member
   List<MovieComingItem> _listComing;
   List<ComingRecommendsItem> _listRecommends;
@@ -27,8 +26,6 @@ class MovieComingListState extends State<MovieComingListWidget>
   }
 
   void _getNetComingData() async {
-    if (!mounted) return;
-    //
     Response res = await new Dio().get(
         "https://ticket-api-m.mtime.cn/movie/mobilemoviecoming.api",
         queryParameters: {"locationId": "290"});
@@ -37,13 +34,15 @@ class MovieComingListState extends State<MovieComingListWidget>
     MovieComingData data = MovieComingData.fromJson(
         realData["moviecomings"], realData["recommends"]);
     //
-    setState(() {
-      _listComing = data.moviecomings;
-      _listRecommends = data.recommends;
-      nComingCount = _listComing.length;
-      nRecommendCount = _listRecommends.length;
-      nTotalCount = nComingCount + nRecommendCount;
-    });
+    if (mounted) {
+      setState(() {
+        _listComing = data.moviecomings;
+        _listRecommends = data.recommends;
+        nComingCount = _listComing.length;
+        nRecommendCount = _listRecommends.length;
+        nTotalCount = nComingCount + nRecommendCount;
+      });
+    }
   }
 
   @override
@@ -215,5 +214,7 @@ class MovieComingListState extends State<MovieComingListWidget>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  void dispose() {
+    super.dispose();
+  }
 }

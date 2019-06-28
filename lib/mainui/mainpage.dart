@@ -32,10 +32,10 @@ class MainPageBottomState extends State<MainPageBottomTabWidget> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         backgroundColor: Colors.white,
-        iconSize: 22,
+        iconSize: 21,
         unselectedFontSize: 14,
         selectedFontSize: 14,
-        selectedItemColor: Colors.black87,
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black38,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {

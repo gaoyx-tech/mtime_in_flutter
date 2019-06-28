@@ -92,7 +92,7 @@ class CinemaListState extends State<CinemaList> {
               borderRadius: BorderRadius.circular(4.0)),
           padding: const EdgeInsets.only(
               left: 2.0, right: 2.0, top: 2.0, bottom: 2.0),
-          margin: const EdgeInsets.only(right: 2),
+          margin: const EdgeInsets.only(right: 3),
           child: Text(sTypes[i],
               style: TextStyle(
                   color: Colors.grey,
@@ -116,9 +116,16 @@ class CinemaListState extends State<CinemaList> {
     List<CinemaItem> items =
         CinemaListData.fromJson(jsonStr["data"]["cinemaList"]).cinemaList;
     //
-    setState(() {
-      _list = items;
-    });
+    if (mounted) {
+      setState(() {
+        _list = items;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

@@ -81,7 +81,6 @@ class RankNationState extends State<RankNationList> {
   }
 
   void _getRequestNetData() async {
-    if (!mounted) return;
     Response response = await new Dio().get(
         'https://api-m.mtime.cn/TopList/TopListDetailsByRecommend.api',
         queryParameters: {
@@ -91,9 +90,11 @@ class RankNationState extends State<RankNationList> {
         });
     final jsonResponse = json.decode(response.toString());
     RankMovie movies = RankMovie.fromJson(jsonResponse["movies"]);
-    setState(() {
-      _listData = movies.movies;
-    });
+    if (mounted) {
+      setState(() {
+        _listData = movies.movies;
+      });
+    }
   }
 
   @override
@@ -105,11 +106,11 @@ class RankNationState extends State<RankNationList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (BuildContext context1, int index) {
           return GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
+                    context1,
                     MaterialPageRoute(
                         maintainState: false,
                         builder: (BuildContext context) {
@@ -120,5 +121,10 @@ class RankNationState extends State<RankNationList> {
               child: _createRankItem(index));
         },
         itemCount: _listData.length);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
