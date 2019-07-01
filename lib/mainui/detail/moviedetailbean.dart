@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
+
 class BoxOffice {
   final String totalBoxDes;
   final String totalBoxUnit;
@@ -177,5 +180,54 @@ class CommentData {
     List<CommentItem> lstPlus =
         listPlus.map((item) => CommentItem.fromJson(item)).toList();
     return CommentData(mini: lstMini, plus: lstPlus);
+  }
+}
+
+//全部短评列表--------------------------------------------------------------------------------------------------------------------------------------------
+class ShortReviewItem {
+  final String ca;
+  final String caimg;
+  final cd;
+  final String ce;
+  final cr;
+
+  ShortReviewItem({this.ca, this.caimg, this.cd, this.ce, this.cr});
+
+  factory ShortReviewItem.fromJson(Map<String, dynamic> parseJson) {
+    return ShortReviewItem(
+        ca: parseJson["ca"],
+        caimg: parseJson["caimg"],
+        cd: parseJson["cd"],
+        ce: parseJson["ce"],
+        cr: parseJson["cr"]);
+  }
+}
+
+//
+class ShortReviewData {
+  final List<ShortReviewItem> items;
+
+  ShortReviewData({this.items});
+
+  factory ShortReviewData.fromJson(List<dynamic> listData) {
+    List<ShortReviewItem> list1 =
+        listData.map((item) => ShortReviewItem.fromJson(item)).toList();
+    return ShortReviewData(items: list1);
+  }
+}
+
+//provider 相关
+class ShortReviewModel extends ChangeNotifier {
+  final List<ShortReviewItem> items = [];
+
+  //
+  List<ShortReviewItem> getListData() => items;
+
+  //
+  void getNetData(String sMovieId, int index) async {
+    Response response = await Dio().get(
+        'https://api-m.mtime.cn/Showtime/HotMovieComments.api',
+        queryParameters: {"movieId": sMovieId, "pageIndex": index.toString()});
+    print(response.toString());
   }
 }

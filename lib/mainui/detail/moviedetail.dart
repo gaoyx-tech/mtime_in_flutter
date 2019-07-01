@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailbean.dart';
+import 'package:mtime_in_flutter/mainui/detail/moviedetailshortview.dart';
 
 class MovieDetailWidget extends StatefulWidget {
   //
@@ -80,7 +81,14 @@ class MovieDetailState extends State<MovieDetailWidget> {
                 setPadding(buildShortReview()), //短评
                 SizedBox(height: 5),
                 setPadding(GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              maintainState: false,
+                              builder: (context) => MovieDetailShortView(
+                                  movieId: widget.sMovieId)));
+                    },
                     child: Align(
                         alignment: Alignment.bottomRight,
                         child: Text('点击查看更多短评',
