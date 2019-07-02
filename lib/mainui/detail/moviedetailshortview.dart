@@ -14,29 +14,26 @@ class MovieDetailShortView extends StatelessWidget {
       builder: (context) => ShortReviewModel(),
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.black87,
-          leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Center(
-                  child: Text('<返回',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500)))),
-          automaticallyImplyLeading: false,
-          title: Text(
-            '所有短评',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.italic),
-          ),
-        ),
+            centerTitle: true,
+            backgroundColor: Colors.black87,
+            leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Center(
+                    child: Text('< 返回',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500)))),
+            automaticallyImplyLeading: false,
+            title: Text('所有短评',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    fontStyle: FontStyle.normal))),
         body: ShortListView(sMovieId: movieId),
       ),
     );
@@ -66,6 +63,54 @@ class ShortListView extends StatelessWidget {
   }
 
   Widget _createReviewItem(int index) {
-    return Container(child: Text(model.getListData()[index].ce));
+    return Container(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //
+            Row(
+              children: <Widget>[
+                Image.network(model.getListData()[index].caimg,
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.high),
+                SizedBox(width: 15),
+                Text(model.getListData()[index].ca,
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14)),
+                SizedBox(width: 15),
+                Text("评分：${model.getListData()[index].cr}",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 13))
+              ],
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+            SizedBox(height: 15),
+            //
+            Text(model.getListData()[index].ce,
+                style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontStyle: FontStyle.normal),
+                maxLines: 10),
+            //
+            SizedBox(height: 15),
+            Text(model.getListData()[index].cd.toString(),
+                style: TextStyle(
+                    color: Colors.black45,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 13))
+          ]),
+      padding: const EdgeInsets.all(5),
+      color: Colors.white,
+    );
   }
 }
