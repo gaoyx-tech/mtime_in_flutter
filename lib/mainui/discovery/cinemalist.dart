@@ -130,6 +130,12 @@ class CinemaListState extends State<CinemaList> {
 
   @override
   Widget build(BuildContext context) {
+    if (_list.isEmpty) {
+      return Center(
+          child: CircularProgressIndicator(
+              strokeWidth: 2.0,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black)));
+    }
     return ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return _createCinemaItem(index);
