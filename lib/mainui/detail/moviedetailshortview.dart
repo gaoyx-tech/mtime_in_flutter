@@ -37,7 +37,35 @@ class MovieDetailShortView extends StatelessWidget {
                 fontStyle: FontStyle.italic),
           ),
         ),
+        body: ShortListView(sMovieId: movieId),
       ),
     );
+  }
+}
+
+// ignore: must_be_immutable
+class ShortListView extends StatelessWidget {
+  final String sMovieId;
+  ShortReviewModel model;
+
+  ShortListView({this.sMovieId});
+
+  @override
+  Widget build(BuildContext context) {
+    //获取model
+    model = Provider.of<ShortReviewModel>(context);
+    model.getNetData(sMovieId, 1);
+    //
+    return ListView.separated(
+        itemBuilder: (context, int index) {
+          return _createReviewItem(index);
+        },
+        separatorBuilder: (context, int index) =>
+            Divider(height: 1, color: Colors.grey),
+        itemCount: model.getListData().length);
+  }
+
+  Widget _createReviewItem(int index) {
+    return Container(child: Text(model.getListData()[index].ce));
   }
 }

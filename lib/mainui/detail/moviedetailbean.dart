@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 
@@ -228,6 +230,8 @@ class ShortReviewModel extends ChangeNotifier {
     Response response = await Dio().get(
         'https://api-m.mtime.cn/Showtime/HotMovieComments.api',
         queryParameters: {"movieId": sMovieId, "pageIndex": index.toString()});
-    print(response.toString());
+    final jsonStr = json.decode(response.toString());
+    items.addAll(ShortReviewData.fromJson(jsonStr["data"]["cts"]).items);
+    notifyListeners();
   }
 }
