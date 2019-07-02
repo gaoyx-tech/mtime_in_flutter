@@ -16,7 +16,8 @@ class MovieDetailWidget extends StatefulWidget {
   }
 }
 
-class MovieDetailState extends State<MovieDetailWidget> {
+class MovieDetailState extends State<MovieDetailWidget>
+    with AutomaticKeepAliveClientMixin {
   //
   Basic _allInfo;
   CommentData _commentData;
@@ -52,8 +53,24 @@ class MovieDetailState extends State<MovieDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (_allInfo == null || _commentData == null)
-      return Container(color: Colors.white);
+      return Scaffold(
+          body: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+            CircularProgressIndicator(
+                strokeWidth: 2.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
+            Text('数据加载中...',
+                style: TextStyle(
+                    color: Colors.black87,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500)),
+          ])));
     //
     return Scaffold(
         body: RefreshIndicator(
@@ -564,4 +581,7 @@ class MovieDetailState extends State<MovieDetailWidget> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

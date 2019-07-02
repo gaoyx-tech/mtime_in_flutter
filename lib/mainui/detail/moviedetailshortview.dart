@@ -44,22 +44,47 @@ class MovieDetailShortView extends StatelessWidget {
 class ShortListView extends StatelessWidget {
   final String sMovieId;
   ShortReviewModel model;
+  int pageIndex = 1;
+  ScrollController _scrollController = ScrollController();
 
-  ShortListView({this.sMovieId});
+  ShortListView({Key key, this.sMovieId}) : super(key: key) {
+    //load more key point
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        ++pageIndex;
+        model.getNetData(sMovieId, pageIndex);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    //获取model
-    model = Provider.of<ShortReviewModel>(context);
-    model.getNetData(sMovieId, 1);
+    //获取model,不判空，会重复添加
+    if (model == null) {
+      model = Provider.of<ShortReviewModel>(context);
+      model.getNetData(sMovieId, pageIndex);
+    }
     //
     return ListView.separated(
         itemBuilder: (context, int index) {
-          return _createReviewItem(index);
+          if (index == model.getListData().length) {
+            return Container(
+                width: double.infinity,
+                height: 40,
+                alignment: Alignment.center,
+                child: Text('加载更多中....',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300)));
+          } else
+            return _createReviewItem(index);
         },
         separatorBuilder: (context, int index) =>
             Divider(height: 1, color: Colors.grey),
-        itemCount: model.getListData().length);
+        controller: _scrollController,
+        itemCount: model.getListData().length + 1);
   }
 
   Widget _createReviewItem(int index) {
@@ -71,8 +96,8 @@ class ShortListView extends StatelessWidget {
             Row(
               children: <Widget>[
                 Image.network(model.getListData()[index].caimg,
-                    width: 20,
-                    height: 20,
+                    width: 25,
+                    height: 25,
                     fit: BoxFit.cover,
                     filterQuality: FilterQuality.high),
                 SizedBox(width: 15),
