@@ -452,7 +452,7 @@ class MovieDetailState extends State<MovieDetailWidget>
                 ), //
                 Expanded(
                   child: Text(
-                    _allInfo.director.name,
+                    _allInfo.director.name ?? "",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

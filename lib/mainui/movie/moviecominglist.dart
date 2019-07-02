@@ -11,7 +11,7 @@ class MovieComingListWidget extends StatefulWidget {
   }
 }
 
-class MovieComingListState extends State<MovieComingListWidget>{
+class MovieComingListState extends State<MovieComingListWidget> {
   //member
   List<MovieComingItem> _listComing;
   List<ComingRecommendsItem> _listRecommends;
@@ -62,10 +62,20 @@ class MovieComingListState extends State<MovieComingListWidget>{
         itemCount: nTotalCount,
       );
     } else
-      return Container(
-        width: 0,
-        height: 0,
-      );
+      return Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+            CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                strokeWidth: 2.0),
+            Text('数据加载中....',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w400))
+          ]));
   }
 
   Widget buildComingItem(BuildContext context, int index) {

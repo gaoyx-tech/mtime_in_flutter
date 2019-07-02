@@ -105,6 +105,22 @@ class RankNationState extends State<RankNationList> {
 
   @override
   Widget build(BuildContext context) {
+    if (_listData.isEmpty) {
+      return Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+            CircularProgressIndicator(
+                strokeWidth: 2.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
+            Text('数据加载中....',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic))
+          ]));
+    }
     return ListView.builder(
         itemBuilder: (BuildContext context1, int index) {
           return GestureDetector(
