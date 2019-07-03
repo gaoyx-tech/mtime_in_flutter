@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   dio: ^2.1.7  #latest version
   provider: ^2.0.0
+  shared_preferences: ^0.5.3+1
 
 dev_dependencies:
   flutter_test:

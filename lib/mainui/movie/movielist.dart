@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mtime_in_flutter/mainui/movie/moviecominglist.dart';
 import 'movienowlist.dart';
 import 'moviecominglist.dart';
-import 'moviesheetgrid.dart';
 
 class MovieList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -38,7 +37,7 @@ class MovieList extends StatelessWidget {
             tabs: <Widget>[
               Tab(text: "正在热映"),
               Tab(text: "即将上映"),
-              Tab(text: "推荐片单"),
+//              Tab(text: "推荐片单"),
             ],
           ),
         ),
@@ -49,7 +48,7 @@ class MovieList extends StatelessWidget {
             //movie coming
             MovieComingListWidget(),
             //movie recommend all
-            MovieSheetGrid()
+//            MovieSheetGrid()
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailbean.dart';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailshortview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MovieDetailWidget extends StatefulWidget {
   //
@@ -22,10 +23,40 @@ class MovieDetailState extends State<MovieDetailWidget>
   Basic _allInfo;
   CommentData _commentData;
 
+  //about love icon
+  String mLoveMovies = "";
+  bool isLoved;
+
   @override
   void initState() {
     super.initState();
     _getNetMovieDetail();
+    _getMovieIsLoved();
+  }
+
+  //is loved movie?
+  void _getMovieIsLoved() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    mLoveMovies = pref.getString("lovemovies") ?? "";
+    //
+    setState(() {
+      if (mLoveMovies.contains(widget.sMovieId) == false)
+        isLoved = false;
+      else
+        isLoved = true;
+    });
+  }
+
+  //set movie love
+  void _setMovieIsLoved() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (mLoveMovies.contains(widget.sMovieId)) {
+      mLoveMovies = mLoveMovies.replaceAll("${widget.sMovieId},", "");
+      pref.setString("lovemovies", mLoveMovies);
+    } else {
+      mLoveMovies += "${widget.sMovieId},";
+      pref.setString("lovemovies", mLoveMovies);
+    }
   }
 
   //get movie detail info
@@ -388,6 +419,29 @@ class MovieDetailState extends State<MovieDetailWidget>
 
   //构建一个头部播放海报页
   Widget buildHeadPosterPlay(BuildContext context) {
+    Widget iconLove;
+    if (isLoved == false) {
+      iconLove = IconButton(
+          icon: Icon(Icons.favorite_border),
+          color: Colors.white,
+          onPressed: () {
+            _setMovieIsLoved();
+            setState(() {
+              isLoved = true;
+            });
+          });
+    } else {
+      iconLove = IconButton(
+          icon: Icon(Icons.favorite),
+          color: Colors.red,
+          onPressed: () {
+            _setMovieIsLoved();
+            setState(() {
+              isLoved = false;
+            });
+          });
+    }
+    //
     return Container(
         height: 240,
         child: Stack(
@@ -402,7 +456,7 @@ class MovieDetailState extends State<MovieDetailWidget>
               top: 45,
               child: GestureDetector(
                 child: Text(
-                  '<返回',
+                  '< 返回',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -413,6 +467,8 @@ class MovieDetailState extends State<MovieDetailWidget>
                 },
               ),
             ),
+            //
+            Positioned(right: 20, top: 45, child: iconLove)
           ],
         ));
   }
