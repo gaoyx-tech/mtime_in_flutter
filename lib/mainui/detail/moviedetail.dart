@@ -24,8 +24,8 @@ class MovieDetailState extends State<MovieDetailWidget>
   CommentData _commentData;
 
   //about love icon
-  String mLoveMovies = "";
-  bool isLoved;
+  String mLoveMovies = ""; //以免再click的时候再次请求sp
+  bool isLoved; //为了实时显示红心
 
   @override
   void initState() {
@@ -102,64 +102,59 @@ class MovieDetailState extends State<MovieDetailWidget>
                     fontSize: 15,
                     fontWeight: FontWeight.w500)),
           ])));
-    //
-    return Scaffold(
-        body: RefreshIndicator(
-            color: Colors.black,
-            displacement: 70,
-            backgroundColor: Colors.white,
-            onRefresh: () {
-              _getNetMovieDetail();
-            },
-            child: ListView(
-              padding: EdgeInsets.only(top: 0), //Listview无法在页面中置顶的解决方案
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                //顶部播放海报示意
-                buildHeadPosterPlay(context),
-                SizedBox(height: 10),
-                setPadding(buildHeadBaseInfo()), //上部基本信息
-                SizedBox(height: 10),
-                setPadding(buildIntroduce()), //介绍
-                SizedBox(height: 10),
-                setPadding(buildActorsListView()), //演员列表
-                SizedBox(height: 10),
-                setPadding(buildPosterImages()), //四张海报
-                SizedBox(height: 10),
-                setPadding(buildShortReview()), //短评
-                SizedBox(height: 5),
-                setPadding(GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              maintainState: false,
-                              builder: (context) => MovieDetailShortView(
-                                  movieId: widget.sMovieId)));
-                    },
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text('点击查看更多短评',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w500))))),
-                SizedBox(height: 10),
-                setPadding(buildLongReview()), //长评
-                SizedBox(height: 5),
-                setPadding(GestureDetector(
-                    onTap: () {},
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text('点击查看更多长评',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FontStyle.italic)))))
-              ],
-            )));
+
+    //为了点击能够弹出snackbar 所以构建Builder
+    return Scaffold(body: Builder(builder: (BuildContext context) {
+      return ListView(
+        padding: EdgeInsets.only(top: 0), //Listview无法在页面中置顶的解决方案
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          //顶部播放海报示意
+          buildHeadPosterPlay(context),
+          SizedBox(height: 10),
+          setPadding(buildHeadBaseInfo()), //上部基本信息
+          SizedBox(height: 10),
+          setPadding(buildIntroduce()), //介绍
+          SizedBox(height: 10),
+          setPadding(buildActorsListView()), //演员列表
+          SizedBox(height: 10),
+          setPadding(buildPosterImages()), //四张海报
+          SizedBox(height: 10),
+          setPadding(buildShortReview()), //短评
+          SizedBox(height: 5),
+          setPadding(GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        maintainState: false,
+                        builder: (context) =>
+                            MovieDetailShortView(movieId: widget.sMovieId)));
+              },
+              child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text('点击查看更多短评',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w500))))),
+          SizedBox(height: 10),
+          setPadding(buildLongReview()), //长评
+          SizedBox(height: 5),
+          setPadding(GestureDetector(
+              onTap: () {},
+              child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text('点击查看更多长评',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic)))))
+        ],
+      );
+    }));
   }
 
   //设置内边距
@@ -426,6 +421,13 @@ class MovieDetailState extends State<MovieDetailWidget>
           color: Colors.white,
           onPressed: () {
             _setMovieIsLoved();
+            final snackBar = new SnackBar(
+                content: new Text(
+                  '已将本电影加入我的最爱!',
+                ),
+                backgroundColor: Colors.black,
+                duration: Duration(seconds: 2));
+            Scaffold.of(context).showSnackBar(snackBar);
             setState(() {
               isLoved = true;
             });
@@ -436,6 +438,11 @@ class MovieDetailState extends State<MovieDetailWidget>
           color: Colors.red,
           onPressed: () {
             _setMovieIsLoved();
+            final snackBar = new SnackBar(
+                content: new Text('已将本电影移除我的最爱!'),
+                backgroundColor: Colors.black,
+                duration: Duration(seconds: 2));
+            Scaffold.of(context).showSnackBar(snackBar);
             setState(() {
               isLoved = false;
             });
@@ -468,7 +475,7 @@ class MovieDetailState extends State<MovieDetailWidget>
               ),
             ),
             //
-            Positioned(right: 20, top: 45, child: iconLove)
+            Positioned(right: 20, bottom: 20, child: iconLove)
           ],
         ));
   }
