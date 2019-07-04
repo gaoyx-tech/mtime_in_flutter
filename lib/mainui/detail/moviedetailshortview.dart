@@ -28,7 +28,7 @@ class MovieDetailShortView extends StatelessWidget {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w500)))),
             automaticallyImplyLeading: false,
-            title: Text('所有短评',
+            title: Text('影片所有短评',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,

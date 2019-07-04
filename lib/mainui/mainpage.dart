@@ -32,7 +32,7 @@ class MainPageBottomState extends State<MainPageBottomTabWidget> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         backgroundColor: Colors.white,
-        iconSize: 21,
+        iconSize: 20,
         unselectedFontSize: 14,
         selectedFontSize: 14,
         selectedItemColor: Colors.black,

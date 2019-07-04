@@ -17,14 +17,13 @@ class MovieDetailLongView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              '影片长评',
+              '影片所有长评',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w400),
             ),
-            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.black,
           ),
@@ -50,6 +49,12 @@ class LongReviewListView extends StatelessWidget {
     if (longModel == null) {
       longModel = Provider.of<LongReviewModel>(context);
       longModel.getNetData(movieId, pageIndex);
+    }
+    if (longModel.getLongData().length == 0) {
+      return Center(
+          child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              strokeWidth: 1.5));
     }
     //
     return ListView.separated(
