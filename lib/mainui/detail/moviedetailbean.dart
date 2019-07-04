@@ -235,3 +235,35 @@ class ShortReviewModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+//全部长评列表--------------------------------------------------------------------------------------------------------------------------------------------------------------
+class LongReviewItem {
+  final String content;
+  final String headurl;
+  final modifyTime;
+  final String nickname;
+  final rating;
+  final String title;
+
+  LongReviewItem(
+      {this.content,
+      this.headurl,
+      this.modifyTime,
+      this.nickname,
+      this.rating,
+      this.title});
+
+  factory LongReviewItem.parseJson(Map<String, dynamic> parseJson) {
+    return LongReviewItem(
+        content: parseJson["content"],
+        headurl: parseJson["headurl"],
+        modifyTime: parseJson["modifyTime"],
+        nickname: parseJson["nickname"],
+        rating: parseJson["rating"],
+        title: parseJson["title"]);
+  }
+}
+
+class LongReviewList{
+
+}

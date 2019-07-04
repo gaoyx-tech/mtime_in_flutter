@@ -419,15 +419,21 @@ class MovieDetailState extends State<MovieDetailWidget>
       iconLove = IconButton(
           icon: Icon(Icons.favorite_border),
           color: Colors.white,
+          iconSize: 26,
+          alignment: Alignment.bottomRight,
+          padding: const EdgeInsets.all(0),
           onPressed: () {
             _setMovieIsLoved();
             final snackBar = new SnackBar(
-                content: new Text(
-                  '已将本电影加入我的最爱!',
-                ),
+                content: new Text('已将本电影加入我的最爱!',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic)),
                 backgroundColor: Colors.black,
-                duration: Duration(seconds: 2));
+                duration: Duration(milliseconds: 1500));
             Scaffold.of(context).showSnackBar(snackBar);
+            //
             setState(() {
               isLoved = true;
             });
@@ -436,13 +442,22 @@ class MovieDetailState extends State<MovieDetailWidget>
       iconLove = IconButton(
           icon: Icon(Icons.favorite),
           color: Colors.red,
+          iconSize: 26,
+          //以下两行代码可以使其更向右下角
+          padding: const EdgeInsets.all(0),
+          alignment: Alignment.bottomRight,
           onPressed: () {
             _setMovieIsLoved();
             final snackBar = new SnackBar(
-                content: new Text('已将本电影移除我的最爱!'),
+                content: new Text('已将本电影移除我的最爱!',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic)),
                 backgroundColor: Colors.black,
-                duration: Duration(seconds: 2));
+                duration: Duration(milliseconds: 1500));
             Scaffold.of(context).showSnackBar(snackBar);
+            //
             setState(() {
               isLoved = false;
             });
@@ -457,7 +472,7 @@ class MovieDetailState extends State<MovieDetailWidget>
           children: <Widget>[
             Image.network(_allInfo.stageImg[0].imgUrl, fit: BoxFit.cover),
             Container(
-                width: double.infinity, height: 240, color: Colors.black45),
+                width: double.infinity, height: 240, color: Colors.black54),
             Positioned(
               left: 25,
               top: 45,
@@ -475,7 +490,15 @@ class MovieDetailState extends State<MovieDetailWidget>
               ),
             ),
             //
-            Positioned(right: 20, bottom: 20, child: iconLove)
+            Positioned(right: 10, bottom: 10, child: iconLove),
+            //
+            Center(
+                child: IconButton(
+              icon: Icon(Icons.play_circle_filled),
+              color: Colors.white,
+              iconSize: 55,
+              onPressed: () {},
+            ))
           ],
         ));
   }
