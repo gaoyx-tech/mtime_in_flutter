@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailbean.dart';
+import 'package:mtime_in_flutter/mainui/detail/moviedetaillongview.dart';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailshortview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -143,7 +144,15 @@ class MovieDetailState extends State<MovieDetailWidget>
           setPadding(buildLongReview()), //长评
           SizedBox(height: 5),
           setPadding(GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        maintainState: false,
+                        builder: (BuildContext context) {
+                          return MovieDetailLongView(widget.sMovieId);
+                        }));
+              },
               child: Align(
                   alignment: Alignment.bottomRight,
                   child: Text('点击查看更多长评',
@@ -414,6 +423,7 @@ class MovieDetailState extends State<MovieDetailWidget>
 
   //构建一个头部播放海报页
   Widget buildHeadPosterPlay(BuildContext context) {
+    //
     Widget iconLove;
     if (isLoved == false) {
       iconLove = IconButton(

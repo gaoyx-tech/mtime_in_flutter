@@ -264,6 +264,32 @@ class LongReviewItem {
   }
 }
 
-class LongReviewList{
+class LongReviewList {
+  final List<LongReviewItem> listData;
 
+  LongReviewList({this.listData});
+
+  factory LongReviewList.fromJson(List<dynamic> items) {
+    List<LongReviewItem> lstData =
+        items.map((item) => LongReviewItem.parseJson(item)).toList();
+    return LongReviewList(listData: lstData);
+  }
+}
+
+//
+class LongReviewModel extends ChangeNotifier {
+  List<LongReviewItem> items = [];
+
+  //
+  List<LongReviewItem> getLongData() => items;
+
+  //
+  void getNetData(String movieId, int pageIndex) async {
+    Response response = await Dio().get(
+        'https://api-m.mtime.cn/Movie/HotLongComments.api',
+        queryParameters: {"movieId": movieId, "pageIndex": pageIndex});
+    final jsonStr = json.decode(response.toString());
+    items.addAll(LongReviewList.fromJson(jsonStr["comments"]).listData);
+    notifyListeners();
+  }
 }
