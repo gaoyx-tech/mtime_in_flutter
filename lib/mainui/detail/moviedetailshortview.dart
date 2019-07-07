@@ -16,18 +16,6 @@ class MovieDetailShortView extends StatelessWidget {
         appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.black87,
-            leading: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Center(
-                    child: Text('< 返回',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500)))),
-            automaticallyImplyLeading: false,
             title: Text('影片所有短评',
                 style: TextStyle(
                     color: Colors.white,
