@@ -13,11 +13,17 @@ class PreviewList extends StatelessWidget {
       bloc = Provider.of<TrailerBloc>(context);
       bloc.getNetData();
     }
+    if (bloc.listData.length == 0) {
+      return Center(
+          child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              strokeWidth: 1.5));
+    }
     return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return _createPreviewItem(index);
         },
-        itemCount: 30);
+        itemCount: bloc.listData.length);
   }
 
   Widget _createPreviewItem(int index) {
