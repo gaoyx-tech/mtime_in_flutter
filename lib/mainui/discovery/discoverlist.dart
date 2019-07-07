@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mtime_in_flutter/mainui/discovery/cinemalist.dart';
 import 'package:mtime_in_flutter/mainui/discovery/commentlist.dart';
+import 'package:mtime_in_flutter/mainui/discovery/discoverylistbean.dart';
 import 'package:mtime_in_flutter/mainui/discovery/previewlist.dart';
+import 'package:provider/provider.dart';
 
 class DiscoveryList extends StatelessWidget {
   @override
@@ -25,7 +27,8 @@ class DiscoveryList extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            PreviewList(),
+            ChangeNotifierProvider<TrailerBloc>.value(
+                notifier: TrailerBloc(), child: PreviewList()),
             CommentList(),
             CinemaList()
           ],

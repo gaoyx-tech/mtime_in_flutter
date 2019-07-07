@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mtime_in_flutter/mainui/discovery/discoverylistbean.dart';
+import 'package:provider/provider.dart';
 
-class PreviewList extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return PreviewListState();
-  }
-}
+// ignore: must_be_immutable
+class PreviewList extends StatelessWidget {
+  //
+  TrailerBloc bloc;
 
-class PreviewListState extends State<PreviewList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    if (bloc == null) {
+      bloc = Provider.of<TrailerBloc>(context);
+      bloc.getNetData();
+    }
+    return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return _createPreviewItem();
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(height: 2, color: Colors.grey);
+          return _createPreviewItem(index);
         },
         itemCount: 30);
   }
 
-  Widget _createPreviewItem() {
+  Widget _createPreviewItem(int index) {
     return Container(
       width: double.infinity,
       height: 300,
@@ -34,32 +34,40 @@ class PreviewListState extends State<PreviewList> {
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(
-                      'http://img5.mtime.cn/mg/2019/06/17/102114.71512975.jpg',
+                  Image.network(bloc.listData[index].coverImg,
                       width: double.infinity,
                       height: 245,
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover),
                   //前景昏暗
                   Container(
-                      color: Colors.black38,
+                      color: Colors.black45,
                       height: 245,
                       width: double.infinity),
                   Positioned(
                       right: 15,
                       bottom: 10,
-                      child: Text('共播放100次',
+                      child: Text('共播放${bloc.listData[index].playCount}次',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 13))),
+                  GestureDetector(
+                      onTap: () {},
+                      child: Center(
+                          child: IconButton(
+                        iconSize: 37,
+                        color: Colors.white,
+                        icon: Icon(Icons.play_circle_outline),
+                        onPressed: () {},
+                      )))
                 ],
               )),
           //文字部分
           SizedBox(height: 10),
           Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text('解放了 首支预告',
+              child: Text(bloc.listData[index].videoTitle,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -67,7 +75,7 @@ class PreviewListState extends State<PreviewList> {
           SizedBox(height: 5),
           Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text('钟汉良战争大片《解放了》预告',
+              child: Text(bloc.listData[index].movieName,
                   style: TextStyle(
                       color: Colors.black45,
                       fontSize: 12,

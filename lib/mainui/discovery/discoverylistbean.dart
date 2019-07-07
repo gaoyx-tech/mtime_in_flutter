@@ -1,3 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'package:provider/provider.dart';
+
 //cinema
 class CinemaFeature {
   final int has3D;
@@ -81,4 +86,65 @@ class CinemaListData {
         listData.map((item) => CinemaItem.fromJson(item)).toList();
     return CinemaListData(cinemaList: lst);
   }
+}
+
+//预告片------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class TrailerItem {
+  final String coverImg;
+  final String hightUrl;
+  final String movieName;
+  final String playCount;
+  final videoLength;
+  final String videoTitle;
+
+  //
+  TrailerItem(
+      {this.coverImg,
+      this.hightUrl,
+      this.movieName,
+      this.playCount,
+      this.videoLength,
+      this.videoTitle});
+
+  //
+  factory TrailerItem.fromJson(Map<String, dynamic> parseJson) {
+    return TrailerItem(
+        coverImg: parseJson["coverImg"],
+        hightUrl: parseJson["hightUrl"],
+        movieName: parseJson["movieName"],
+        playCount: parseJson["playCount"],
+        videoLength: parseJson["videoLength"],
+        videoTitle: parseJson["videoTitle"]);
+  }
+}
+
+class TrailerItemList {
+  final List<TrailerItem> listData;
+
+  TrailerItemList({this.listData});
+
+  //
+  factory TrailerItemList.fromJson(List<dynamic> lstData) {
+    List<TrailerItem> list1 =
+        lstData.map((item) => TrailerItem.fromJson(item)).toList();
+    return TrailerItemList(listData: list1);
+  }
+}
+
+//
+class TrailerBloc extends ChangeNotifier {
+  List<TrailerItem> listData = List();
+
+  void getNetData() async {
+    Response response = await Dio()
+        .get("https://ticket-api-m.mtime.cn/discovery/trailerList.api");
+    final jsonStr = json.decode(response.toString());
+    TrailerItemList objData =
+        TrailerItemList.fromJson(jsonStr["data"]["trailers"]);
+    this.listData.addAll(objData.listData);
+    notifyListeners();
+  }
+
+  //
+  List<TrailerItem> getData() => this.listData;
 }
