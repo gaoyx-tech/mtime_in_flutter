@@ -286,7 +286,7 @@ class LongReviewModel extends ChangeNotifier {
   //
   void getNetData(String movieId, int pageIndex) async {
     Response response = await Dio().get(
-        'https://api-m.mtime.cn/Movie/HotLongCommentsi',
+        'https://api-m.mtime.cn/Movie/HotLongComments.api',
         queryParameters: {"movieId": movieId, "pageIndex": pageIndex});
     final jsonStr = json.decode(response.toString());
     items.addAll(LongReviewList.fromJson(jsonStr["comments"]).listData);
