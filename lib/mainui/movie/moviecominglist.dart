@@ -99,13 +99,15 @@ class MovieComingListState extends State<MovieComingListWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.network(
-                _listComing[index - nRecommendCount].image,
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.high,
-                width: 110,
-                height: 140,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    _listComing[index - nRecommendCount].image,
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.high,
+                    width: 110,
+                    height: 140,
+                  )),
               SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

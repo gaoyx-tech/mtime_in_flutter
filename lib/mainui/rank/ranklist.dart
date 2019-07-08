@@ -11,7 +11,7 @@ class RankList extends StatelessWidget {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
+              indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: Colors.black87,
               unselectedLabelColor: Colors.black54,
               labelColor: Colors.black87,

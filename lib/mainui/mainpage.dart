@@ -35,7 +35,7 @@ class MainPageBottomState extends State<MainPageBottomTabWidget> {
         iconSize: 20,
         unselectedFontSize: 14,
         selectedFontSize: 14,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.deepOrange,
         unselectedItemColor: Colors.black38,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {

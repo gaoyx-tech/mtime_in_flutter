@@ -33,7 +33,7 @@ class MovieList extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
-            indicatorSize: TabBarIndicatorSize.label,
+            indicatorSize: TabBarIndicatorSize.tab,
             tabs: <Widget>[
               Tab(text: "正在热映"),
               Tab(text: "即将上映"),

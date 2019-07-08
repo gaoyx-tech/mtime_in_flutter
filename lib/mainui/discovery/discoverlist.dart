@@ -17,7 +17,7 @@ class DiscoveryList extends StatelessWidget {
           title: TabBar(
             tabs: <Widget>[Tab(text: "预告片"), Tab(text: "影评"), Tab(text: "影院")],
             indicatorColor: Colors.black87,
-            indicatorSize: TabBarIndicatorSize.label,
+            indicatorSize: TabBarIndicatorSize.tab,
             labelColor: Colors.black87,
             unselectedLabelColor: Colors.black38,
             labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),

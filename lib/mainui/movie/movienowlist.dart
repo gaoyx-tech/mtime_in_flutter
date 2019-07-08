@@ -85,13 +85,16 @@ class MovieListState extends State<MovieNowListWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 //poster
-                Image.network(
-                  _listData[index].img,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                  height: 148,
-                  width: 110,
-                ), //
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      _listData[index].img,
+                      width: 110,
+                      height: 148,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                    )),
+                //
                 SizedBox(width: 12), //avoid overflow
                 Expanded(
                     child: Padding(
