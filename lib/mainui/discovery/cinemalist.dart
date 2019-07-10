@@ -33,8 +33,8 @@ class CinemaListState extends State<CinemaList> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
                           fontSize: 16)),
                   //
                   Text(_list[index].address,

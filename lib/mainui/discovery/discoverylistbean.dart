@@ -60,8 +60,8 @@ class CinemaItem {
   final String cinameName;
   final ratingFinal;
   final CinemaFeature feature;
-  final double latitude;
-  final double longitude;
+  final latitude;
+  final longitude;
 
   //
   CinemaItem(
