@@ -60,9 +60,17 @@ class CinemaItem {
   final String cinameName;
   final ratingFinal;
   final CinemaFeature feature;
+  final double latitude;
+  final double longitude;
 
   //
-  CinemaItem({this.address, this.cinameName, this.ratingFinal, this.feature});
+  CinemaItem(
+      {this.address,
+      this.cinameName,
+      this.ratingFinal,
+      this.feature,
+      this.latitude,
+      this.longitude});
 
   //
   factory CinemaItem.fromJson(Map<String, dynamic> parseJson) {
@@ -70,7 +78,9 @@ class CinemaItem {
         address: parseJson["address"],
         cinameName: parseJson["cinameName"],
         ratingFinal: parseJson["ratingFinal"],
-        feature: CinemaFeature.fromJson(parseJson["feature"]));
+        feature: CinemaFeature.fromJson(parseJson["feature"]),
+        latitude: parseJson["latitude"],
+        longitude: parseJson["longitude"]);
   }
 }
 
