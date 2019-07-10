@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mtime_in_flutter/mainui/discovery/discoverylistbean.dart';
+import 'package:provider/provider.dart';
+import 'package:mtime_in_flutter/mainui/detail/moviedetail.dart';
 
+// ignore: must_be_immutable
 class CommentList extends StatelessWidget {
+  CommentBloc _commentRequest;
+
   @override
   Widget build(BuildContext context) {
+    if (_commentRequest == null) {
+      _commentRequest = Provider.of<CommentBloc>(context);
+      _commentRequest.getNetData();
+    }
+    //
+    if (_commentRequest.getData().length == 0) {
+      return Center(
+          child: CircularProgressIndicator(
+              strokeWidth: 1.5,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black)));
+    }
+    //
     return ListView.separated(
         itemBuilder: (BuildContext context, int index) {
-          return _createCommentItem();
+          return _createCommentItem(context, index);
         },
         separatorBuilder: (BuildContext context, int index) {
           return Divider(height: 1, color: Colors.grey);
         },
-        itemCount: 30);
+        itemCount: _commentRequest.getData().length);
   }
 
   //
-  Widget _createCommentItem() {
+  Widget _createCommentItem(BuildContext context, int index) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(5),
@@ -28,19 +46,20 @@ class CommentList extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "http://img32.mtime.cn/up/2013/08/13/094117.18753126_128X128.jpg",
-                      scale: 15)), //这个图片不加expand，否则会拉伸
+                      _commentRequest.getData()[index].userImage,
+                      scale: 15)),
+              //这个图片不加expand，否则会拉伸
               SizedBox(width: 10),
               Expanded(
                   flex: 3,
-                  child: Text('我是高原心',
+                  child: Text(_commentRequest.getData()[index].nickname,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
                           letterSpacing: 1.2))),
               Expanded(
                   flex: 1,
-                  child: Text("评分：5.4",
+                  child: Text("评分：${_commentRequest.getData()[index].rating}",
                       style: TextStyle(
                           fontSize: 13,
                           fontStyle: FontStyle.italic,
@@ -51,7 +70,7 @@ class CommentList extends StatelessWidget {
           ),
           SizedBox(height: 10),
           //
-          Text("黑道追杀杀人魔",
+          Text(_commentRequest.getData()[index].title,
               style: TextStyle(
                   fontSize: 15,
                   letterSpacing: 1.3,
@@ -60,7 +79,7 @@ class CommentList extends StatelessWidget {
           SizedBox(height: 10),
           //
           Text(
-            '乍一听，《恶人传》像那种以黑帮或黑色政治人物为主角的传记类电影。 但电影并不是什么纪传体，而是一部常见的韩式犯罪类型片。有意思的是，电影在类型化上做了小小创新，也成为了整部《恶人传》最吸引人的地方。 想想看吧，在过往的韩国电影里，痞气的警察见过，暴力的黑社会见过，变态连环杀人犯也见过，这些类型化角色两两搭配也常出好戏，可是把这三种角色联系在一起呢？是不是新鲜感立刻就来了？ 《恶人传》就是如此，本来...',
+            _commentRequest.getData()[index].summary,
             style: TextStyle(
                 color: Colors.black45,
                 fontSize: 12,
@@ -69,14 +88,78 @@ class CommentList extends StatelessWidget {
           ),
           SizedBox(height: 10),
           //
-          Container(
-              width: double.infinity,
-              height: 20,
-              padding: const EdgeInsets.all(3),
-              margin: const EdgeInsets.only(left: 12, right: 12),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  color: Colors.black12))
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        maintainState: false,
+                        builder: (BuildContext context) {
+                          return MovieDetailWidget(
+                              sMovieId: _commentRequest
+                                  .getData()[index]
+                                  .movie
+                                  .id
+                                  .toString());
+                        }));
+              },
+              child: Container(
+                  width: double.infinity,
+                  height: 100,
+                  padding: const EdgeInsets.all(3),
+                  margin: const EdgeInsets.only(left: 12, right: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black12),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.network(
+                            _commentRequest.getData()[index].movie.image,
+                            width: 70,
+                            height: 90,
+                            filterQuality: FilterQuality.high,
+                            fit: BoxFit.cover),
+                        SizedBox(width: 5),
+                        //防溢出
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                    _commentRequest
+                                        .getData()[index]
+                                        .movie
+                                        .title,
+                                    style: TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 14)),
+                                SizedBox(height: 7),
+                                Text(
+                                    _commentRequest
+                                        .getData()[index]
+                                        .movie
+                                        .titleEn,
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400)),
+                                SizedBox(height: 7),
+                                Text(
+                                    '年代：${_commentRequest.getData()[index].movie.year}',
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400))
+                              ]),
+                        )
+                      ])))
         ],
       ),
     );

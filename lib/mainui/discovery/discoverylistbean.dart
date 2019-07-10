@@ -158,3 +158,82 @@ class TrailerBloc extends ChangeNotifier {
   //
   List<TrailerItem> getData() => this.listData;
 }
+
+//评论------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class CommentMovie {
+  final String image;
+  final String title;
+  final String titleEn;
+  final String year;
+  final int id;
+
+  CommentMovie({this.image, this.title, this.titleEn, this.year, this.id});
+
+  factory CommentMovie.fromJson(Map<String, dynamic> parseJson) {
+    return CommentMovie(
+        image: parseJson["image"],
+        title: parseJson["title"],
+        year: parseJson["year"],
+        id: parseJson["id"],
+        titleEn: parseJson["titleEn"]);
+  }
+}
+
+//
+class CommentItem {
+  final CommentMovie movie;
+  final String nickname;
+  final String summary;
+  final String title;
+  final String userImage;
+  final rating;
+
+  //
+  CommentItem(
+      {this.title,
+      this.movie,
+      this.nickname,
+      this.rating,
+      this.summary,
+      this.userImage});
+
+  //
+  factory CommentItem.fromJson(Map<String, dynamic> parseJson) {
+    return CommentItem(
+        movie: CommentMovie.fromJson(parseJson["relatedObj"]),
+        title: parseJson["title"],
+        nickname: parseJson["nickname"],
+        rating: parseJson["rating"],
+        summary: parseJson["summary"],
+        userImage: parseJson["userImage"]);
+  }
+}
+
+class CommentAllData {
+  final List<CommentItem> datas;
+
+  CommentAllData({this.datas});
+
+  factory CommentAllData.fromJson(List<dynamic> itemsParam) {
+    List<CommentItem> items1 =
+        itemsParam.map((itemData) => CommentItem.fromJson(itemData)).toList();
+    return CommentAllData(datas: items1);
+  }
+}
+
+//
+class CommentBloc extends ChangeNotifier {
+  //
+  List<CommentItem> items = List();
+
+  List<CommentItem> getData() => items;
+
+  //
+  void getNetData() async {
+    Response response = await Dio()
+        .get('https://api-m.mtime.cn/MobileMovie/Review.api?needTop=false');
+    CommentAllData data = CommentAllData.fromJson(response.data);
+    items.addAll(data.datas);
+    notifyListeners();
+  }
+}

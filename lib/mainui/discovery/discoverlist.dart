@@ -29,7 +29,8 @@ class DiscoveryList extends StatelessWidget {
           children: <Widget>[
             ChangeNotifierProvider<TrailerBloc>.value(
                 notifier: TrailerBloc(), child: PreviewList()),
-            CommentList(),
+            ChangeNotifierProvider(
+                child: CommentList(), builder: (context) => CommentBloc()),
             CinemaList()
           ],
         ),
