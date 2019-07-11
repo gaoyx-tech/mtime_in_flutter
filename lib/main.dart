@@ -17,7 +17,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class SplashState extends State<SplashPage> {
-  List<RcmdItem> _listResult;
+  List<RcmdItem> _listResult = List();
   RcmdItem _dataResult;
 
   @override
@@ -33,10 +33,9 @@ class SplashState extends State<SplashPage> {
     final jsonStr = json.decode(response.toString());
     HistoryData data = HistoryData.fromJson(jsonStr["data"]["historyMovie"]);
     setState(() {
-      if (data.movies[0].list.length > 10)
-        _listResult = data.movies[0].list;
-      else
-        _listResult = data.movies[1].list;
+      _listResult
+        ..addAll(data.movies[0].list)
+        ..addAll(data.movies[1].list); //所有推荐的poster
       //random select
       _dataResult = _listResult[Random().nextInt(_listResult.length)];
     });
@@ -56,8 +55,7 @@ class SplashState extends State<SplashPage> {
               fit: BoxFit.cover,
               filterQuality: FilterQuality.high,
             ),
-          ),
-          //点击进入主页
+          ), //点击进入主页
           Positioned(
             right: 20,
             top: 30,
@@ -76,13 +74,12 @@ class SplashState extends State<SplashPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            MainPageBottomTabWidget(), //点击进入主页
+                        builder: (context) => MainPageBottomTabWidget(),
+                        //点击进入主页
                         maintainState: false));
               },
             ),
-          ),
-          //点击进入海报页
+          ), //点击进入海报页
           Positioned(
               right: 20,
               top: 75,
@@ -101,18 +98,15 @@ class SplashState extends State<SplashPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              MovieDetailWidget(sMovieId: _dataResult.movieId),
-                          //点击进入海报的详情页
+                          builder: (context) => MovieDetailWidget(
+                              sMovieId: _dataResult.movieId), //点击进入海报的详情页
                           maintainState: false));
                 },
-              )),
-          //台词和电影名称
+              )), //台词和电影名称
           Positioned(
               bottom: 50, //此子widget底边，距离stack父布局底边的距离
               left: 10,
-              right: 10,
-              //linearlayout vertical
+              right: 10, //linearlayout vertical
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

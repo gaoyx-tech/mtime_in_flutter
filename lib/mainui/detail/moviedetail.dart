@@ -113,15 +113,20 @@ class MovieDetailState extends State<MovieDetailWidget>
           //顶部播放海报示意
           buildHeadPosterPlay(context),
           SizedBox(height: 10),
-          setPadding(buildHeadBaseInfo()), //上部基本信息
+          setPadding(buildHeadBaseInfo()),
+          //上部基本信息
           SizedBox(height: 10),
-          setPadding(buildIntroduce()), //介绍
+          setPadding(buildIntroduce()),
+          //介绍
           SizedBox(height: 10),
-          setPadding(buildActorsListView()), //演员列表
+          setPadding(buildActorsListView()),
+          //演员列表
           SizedBox(height: 10),
-          setPadding(buildPosterImages()), //四张海报
+          setPadding(buildPosterImages()),
+          //四张海报
           SizedBox(height: 10),
-          setPadding(buildShortReview()), //短评
+          setPadding(buildShortReview()),
+          //短评
           SizedBox(height: 5),
           setPadding(GestureDetector(
               onTap: () {
@@ -141,7 +146,8 @@ class MovieDetailState extends State<MovieDetailWidget>
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w500))))),
           SizedBox(height: 10),
-          setPadding(buildLongReview()), //长评
+          setPadding(buildLongReview()),
+          //长评
           SizedBox(height: 5),
           setPadding(GestureDetector(
               onTap: () {
@@ -336,8 +342,7 @@ class MovieDetailState extends State<MovieDetailWidget>
                             color: Colors.black87),
                       ),
                     ],
-                  ),
-                  //分割线
+                  ), //分割线
                   Divider(height: 2, color: Colors.grey)
                 ],
               ),

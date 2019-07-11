@@ -93,8 +93,7 @@ class MovieListState extends State<MovieNowListWidget> {
                       height: 148,
                       fit: BoxFit.cover,
                       filterQuality: FilterQuality.high,
-                    )),
-                //
+                    )), //
                 SizedBox(width: 12), //avoid overflow
                 Expanded(
                     child: Padding(
@@ -107,8 +106,8 @@ class MovieListState extends State<MovieNowListWidget> {
                         _listData[index].tCn,
                         style: TextStyle(
                             color: Colors.black87,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
