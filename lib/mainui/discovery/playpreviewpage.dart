@@ -32,9 +32,13 @@ class PlayPreviewState extends State<PlayPreviewPage> {
 
   @override
   void dispose() {
-    _playerController.dispose();
-    _chewieController.dispose();
-    super.dispose();
+    //进入全屏会call ，所以加次判断
+    if (!_chewieController.isFullScreen) {
+      _chewieController.pause();
+      _playerController.dispose();
+      _chewieController.dispose();
+      super.dispose();
+    }
   }
 
   @override
