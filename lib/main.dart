@@ -49,7 +49,7 @@ class SplashState extends State<SplashPage> {
         children: <Widget>[
           //海报页
           Positioned(
-            bottom: 150,
+            bottom: 100,
             child: Image.network(
               _dataResult.poster,
               fit: BoxFit.cover,
@@ -104,7 +104,7 @@ class SplashState extends State<SplashPage> {
                 },
               )), //台词和电影名称
           Positioned(
-              bottom: 50, //此子widget底边，距离stack父布局底边的距离
+              bottom: 35, //此子widget底边，距离stack父布局底边的距离
               left: 10,
               right: 10, //linearlayout vertical
               child: Column(

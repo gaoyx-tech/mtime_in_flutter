@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mtime_in_flutter/mainui/discovery/discoverylistbean.dart';
+import 'package:mtime_in_flutter/mainui/discovery/playpreviewpage.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -21,12 +22,12 @@ class PreviewList extends StatelessWidget {
     }
     return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return _createPreviewItem(index);
+          return _createPreviewItem(context, index);
         },
         itemCount: bloc.listData.length);
   }
 
-  Widget _createPreviewItem(int index) {
+  Widget _createPreviewItem(BuildContext context, int index) {
     return Container(
       width: double.infinity,
       height: 300,
@@ -58,15 +59,23 @@ class PreviewList extends StatelessWidget {
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 13))),
-                  GestureDetector(
-                      onTap: () {},
-                      child: Center(
-                          child: IconButton(
-                        iconSize: 37,
-                        color: Colors.white,
-                        icon: Icon(Icons.play_circle_outline),
-                        onPressed: () {},
-                      )))
+                  Center(
+                      child: IconButton(
+                    iconSize: 37,
+                    color: Colors.white,
+                    icon: Icon(Icons.play_circle_outline),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              maintainState: false,
+                              builder: (BuildContext context) {
+                                return PlayPreviewPage(
+                                    sPlayTitle: bloc.listData[index].videoTitle,
+                                    sPlayUrl: bloc.listData[index].hightUrl);
+                              }));
+                    },
+                  ))
                 ],
               )),
           //文字部分
