@@ -27,7 +27,8 @@ class PlayPreviewState extends State<PlayPreviewPage> {
         videoPlayerController: _playerController,
         autoPlay: true,
         autoInitialize: true,
-        aspectRatio: 16 / 9);
+        allowFullScreen: false,
+        aspectRatio: 3 / 4);
   }
 
   @override

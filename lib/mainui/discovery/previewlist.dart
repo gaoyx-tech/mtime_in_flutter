@@ -48,7 +48,7 @@ class PreviewList extends StatelessWidget {
                       fit: BoxFit.cover),
                   //前景昏暗
                   Container(
-                      color: Colors.black45,
+                      color: Colors.black54,
                       height: 245,
                       width: double.infinity),
                   Positioned(
@@ -61,7 +61,7 @@ class PreviewList extends StatelessWidget {
                               fontSize: 13))),
                   Center(
                       child: IconButton(
-                    iconSize: 37,
+                    iconSize: 45,
                     color: Colors.white,
                     icon: Icon(Icons.play_circle_outline),
                     onPressed: () {
