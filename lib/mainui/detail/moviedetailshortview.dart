@@ -21,7 +21,7 @@ class MovieDetailShortView extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.normal))),
+                    fontStyle: FontStyle.italic))),
         body: ShortListView(sMovieId: movieId),
       ),
     );

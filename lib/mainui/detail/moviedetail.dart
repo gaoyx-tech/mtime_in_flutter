@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailbean.dart';
 import 'package:mtime_in_flutter/mainui/detail/moviedetaillongview.dart';
 import 'package:mtime_in_flutter/mainui/detail/moviedetailshortview.dart';
+import 'package:mtime_in_flutter/mainui/detail/moviedetailvideopage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MovieDetailWidget extends StatefulWidget {
@@ -512,7 +513,14 @@ class MovieDetailState extends State<MovieDetailWidget>
               icon: Icon(Icons.play_circle_filled),
               color: Colors.white,
               iconSize: 55,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        maintainState: false,
+                        builder: (context) =>
+                            MovieDetailVideoPage(movieId: _allInfo.movieId)));
+              },
             ))
           ],
         ));

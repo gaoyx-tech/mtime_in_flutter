@@ -85,10 +85,12 @@ class Basic {
   final String story;
   final List<String> type;
   final VideoInfo video;
+  final movieId;
 
   Basic(
       {this.commentSpecial,
       this.img,
+      this.movieId,
       this.mins,
       this.name,
       this.nameEn,
@@ -125,6 +127,7 @@ class Basic {
         name: parseJson["name"],
         overallRating: parseJson["overallRating"],
         story: parseJson["story"],
+        movieId: parseJson["movieId"],
         actors: actors,
         director: inf,
         stageImg: stageImgs,
@@ -290,6 +293,69 @@ class LongReviewModel extends ChangeNotifier {
         queryParameters: {"movieId": movieId, "pageIndex": pageIndex});
     final jsonStr = json.decode(response.toString());
     items.addAll(LongReviewList.fromJson(jsonStr["comments"]).listData);
+    notifyListeners();
+  }
+}
+
+//all video-----------------------------------------------------------------------------------------------------------------------------------------
+class VideoItem {
+  final String image;
+  final length;
+  final String playCount;
+  final vId;
+  final String title;
+
+  //
+  VideoItem({this.image, this.length, this.playCount, this.title, this.vId});
+
+  //
+  factory VideoItem.fromJson(Map<String, dynamic> param) {
+    return VideoItem(
+        image: param["image"],
+        length: param["length"],
+        playCount: param["playCount"],
+        title: param["title"],
+        vId: param["vId"]);
+  }
+}
+
+class AllVideoData {
+  final pageCount;
+  final List<VideoItem> videoList;
+
+  AllVideoData({this.pageCount, this.videoList});
+
+  //
+  factory AllVideoData.fromJson(
+      Map<String, dynamic> param1, List<dynamic> lstData) {
+    final pageCount1 = param1["pageCount"];
+    List<VideoItem> items =
+        lstData.map((item) => VideoItem.fromJson(item)).toList();
+    return AllVideoData(pageCount: pageCount1, videoList: items);
+  }
+}
+
+class AllVideoBloc extends ChangeNotifier {
+  var pageCount = 1;
+  final List<VideoItem> items = new List();
+
+  AllVideoData getData() {
+    return AllVideoData(pageCount: pageCount, videoList: items);
+  }
+
+  void getNetData(final movieId, int pageIndex) async {
+    Response response = await Dio().get(
+        'https://ticket-api-m.mtime.cn/movie/category/video.api',
+        queryParameters: {
+          "movieId": movieId.toString(),
+          "pageIndex": pageIndex.toString()
+        });
+    //
+    final jsonStr = json.decode(response.toString());
+    AllVideoData data =
+        AllVideoData.fromJson(jsonStr["data"], jsonStr["data"]["videoList"]);
+    pageCount = data.pageCount;
+    items.addAll(data.videoList);
     notifyListeners();
   }
 }
