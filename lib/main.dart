@@ -98,13 +98,14 @@ class SplashState extends State<SplashPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MovieDetailWidget(
-                              sMovieId: _dataResult.movieId), //点击进入海报的详情页
+                          builder: (context) =>
+                              MovieDetailWidget(sMovieId: _dataResult.movieId),
+                          //点击进入海报的详情页
                           maintainState: false));
                 },
               )), //台词和电影名称
           Positioned(
-              bottom: 35, //此子widget底边，距离stack父布局底边的距离
+              bottom: 20, //此子widget底边，距离stack父布局底边的距离
               left: 10,
               right: 10, //linearlayout vertical
               child: Column(
@@ -118,7 +119,7 @@ class SplashState extends State<SplashPage> {
                     style: TextStyle(
                         color: Colors.deepOrange,
                         fontStyle: FontStyle.italic,
-                        fontSize: 14,
+                        fontSize: 13,
                         fontWeight: FontWeight.w500),
                   ),
                   //分割
@@ -134,7 +135,7 @@ class SplashState extends State<SplashPage> {
                       color: Colors.black,
                       fontStyle: FontStyle.italic,
                       fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                     ),
                   )
                 ],

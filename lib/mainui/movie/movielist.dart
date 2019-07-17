@@ -12,12 +12,6 @@ class MovieList extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {},
-                color: Colors.black54),
-          ],
           title: TabBar(
             // The color of selected tab labels.
             labelColor: Colors.black87,
