@@ -32,8 +32,10 @@ class MovieDetailState extends State<MovieDetailWidget>
   @override
   void initState() {
     super.initState();
-    _getNetMovieDetail();
-    _getMovieIsLoved();
+    if (mounted) {
+      _getNetMovieDetail();
+      _getMovieIsLoved();
+    }
   }
 
   //is loved movie?

@@ -40,8 +40,7 @@ class ShortListView extends StatelessWidget {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        ++pageIndex;
-        model.getNetData(sMovieId, pageIndex);
+        model.getNetData(sMovieId, ++pageIndex);
       }
     });
   }

@@ -109,7 +109,7 @@ class VideoListView extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 14,
                       fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w400))),
+                      fontWeight: FontWeight.w500))),
           //
           Positioned(
               top: 15,
