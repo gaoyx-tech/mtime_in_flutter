@@ -32,8 +32,17 @@ class VideoListView extends StatelessWidget {
   AllVideoBloc bloc;
   int pageIndex = 1;
   final movieId;
+  final ScrollController _scrollController = new ScrollController();
 
-  VideoListView({this.movieId});
+  VideoListView({this.movieId}) {
+    _scrollController.addListener(() {
+      //判断当前滑动位置是不是到达底部，触发加载更多回调
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        bloc.getNetData(movieId, ++pageIndex);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +58,31 @@ class VideoListView extends StatelessWidget {
               strokeWidth: 5.0));
     else {
       return ListView.builder(
+	      controller: _scrollController,
           itemBuilder: (BuildContext context, int index) {
-            return _createVideoItem(context, index);
+            //
+            if (index < bloc.getData().videoList.length)
+              return _createVideoItem(context, index);
+            else
+              return Container(
+                  width: double.infinity,
+                  height: 60,
+                  color: Colors.white,
+                  child: Row(children: <Widget>[
+                    CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.deepOrangeAccent),
+                        strokeWidth: 3),
+                    SizedBox(width: 10),
+                    Text("更多加载中....",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500))
+                  ], mainAxisAlignment: MainAxisAlignment.center));
           },
-          itemCount: bloc.getData().videoList.length);
+          itemCount: bloc.getData().videoList.length + 1);
     }
   }
 

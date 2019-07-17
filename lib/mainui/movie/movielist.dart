@@ -37,7 +37,6 @@ class MovieList extends StatelessWidget {
             tabs: <Widget>[
               Tab(text: "正在热映"),
               Tab(text: "即将上映"),
-//              Tab(text: "推荐片单"),
             ],
           ),
         ),
@@ -47,8 +46,6 @@ class MovieList extends StatelessWidget {
             MovieNowListWidget(),
             //movie coming
             MovieComingListWidget(),
-            //movie recommend all
-//            MovieSheetGrid()
           ],
         ),
       ),
