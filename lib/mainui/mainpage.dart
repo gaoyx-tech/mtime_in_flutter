@@ -46,11 +46,11 @@ class MainPageBottomState extends State<MainPageBottomTabWidget> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.live_tv), title: Text('电影')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.find_replace), title: Text("发现")),
+              icon: Icon(Icons.all_inclusive), title: Text("发现")),
           BottomNavigationBarItem(
               icon: Icon(Icons.library_books), title: Text('排行榜')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_box), title: Text("我的")),
+              icon: Icon(Icons.find_in_page), title: Text("筛选")),
         ],
       ),
     );
